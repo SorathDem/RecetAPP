@@ -84,7 +84,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'RrecetaPag.RecetaPag.wsgi.application'
+WSGI_APPLICATION = 'RecetaPag.wsgi.application'
 
 CHANNEL_LAYERS = {
     "default": {
