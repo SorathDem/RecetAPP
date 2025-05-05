@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* Formulario Principal */
+        form {
+            max-width: 600px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+    
+        h2 {
+            text-align: center;
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+    
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            color: #34495e;
+        }
+    
+        input[type="text"],
+        input[type="file"],
+        input[type="number"],
+        input[type="url"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+    
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: #ff6347;
+            outline: none;
+        }
+    
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+    
+        button[type="submit"] {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            background-color: #ff6347;
+            color: white;
+            font-weight: bold;
+            font-size: 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+    
+        button[type="submit"]:hover {
+            background-color: #e74c3c;
+        }
+    
+        @media (max-width: 600px) {
+            form {
+                padding: 20px;
+            }
+    
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+    
+</head>
+<body>
+    <h2>{% if form.instance.pk %}Editar{% else %}Crear{% endif %} Receta</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Publicar</button>
+</form>
+
+</body>
+</html>

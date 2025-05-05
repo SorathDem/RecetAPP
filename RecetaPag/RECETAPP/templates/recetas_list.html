@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Recetas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 2rem;
+            color: #333;
+        }
+
+        .atras-btn {
+            display: inline-block;
+            margin: 10px;
+            padding: 8px 15px;
+            background-color: #333;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .atras-btn:hover {
+            background-color: #555;
+        }
+
+        .busqueda-input {
+            display: block;
+            width: 80%;
+            margin: 20px auto;
+            padding: 12px;
+            font-size: 1rem;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            background-color: #fff;
+            transition: border-color 0.3s;
+        }
+
+        .busqueda-input:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+
+        .receta-card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 15px;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 300px;
+            text-align: center;
+            display: inline-block;
+            vertical-align: top;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s;
+            box-sizing: border-box;
+        }
+
+        .receta-card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .receta-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .ver-btn,
+        .ver-btn.add-fav {
+            margin-top: 10px;
+            padding: 6px 1px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            display: block;
+            width: 100%;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+
+        .ver-btn:hover,
+        .ver-btn.add-fav:hover {
+            background-color: #45a049;
+        }
+
+        .ver-btn.add-fav {
+            background-color: #007bff;
+        }
+
+        .ver-btn.add-fav:hover {
+            background-color: #0056b3;
+        }
+
+        p {
+            font-size: 1rem;
+            color: #666;
+            margin-top: 10px;
+        }
+
+        .receta-card .ver-btn,
+        .receta-card .ver-btn.add-fav {
+            margin-top: 10px;
+            display: block;
+            width: 100%;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .receta-card {
+                max-width: 90%;
+                margin: 10px;
+            }
+
+            .busqueda-input {
+                width: 90%;
+                margin: 10px auto;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .receta-card {
+                max-width: 100%;
+                margin: 10px 0;
+                padding: 10px;
+            }
+
+            .ver-btn, .ver-btn.add-fav {
+                font-size: 0.9rem;
+                padding: 8px 10px;
+            }
+
+            .busqueda-input {
+                width: 100%;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h2>Recetas</h2>
+    <a class="atras-btn" href="{% url 'pagprincipal' %}">← Atrás</a>
+    
+    <!-- Campo de búsqueda -->
+    <input type="text" id="buscar" placeholder="Buscar recetas..." class="busqueda-input">
+    
+    <!-- Contenedor donde se mostrarán las recetas -->
+    <div id="recetas-lista">
+        {% for receta in recetas %}
+        <div class="receta-card">
+            <h3>{{ receta.titulo }}</h3>
+            {% if receta.imagen %}
+                <img src="{{ receta.imagen.url }}" alt="Imagen de {{ receta.titulo }}">
+            {% endif %}
+            <div style="margin-top: 10px;">
+                <a class="ver-btn" href="{% url 'detalle_receta' receta.id %}">Ver</a>
+                <a class="ver-btn" style="background-color: #007bff;" href="{% url 'agregar_a_favoritos' receta.id %}">Añadir a favoritos</a>
+            </div>
+    
+            <p>⭐ Promedio: 
+                {% if receta.promedio == "Sin calificaciones aún" %}
+                    {{ receta.promedio }}
+                {% else %}
+                    {{ receta.promedio|floatformat:1 }} / 5
+                {% endif %}
+            </p>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <script>
+    document.getElementById('buscar').addEventListener('input', function () {
+        var busqueda = this.value.toLowerCase();
+        var recetas = document.querySelectorAll('.receta-card');
+    
+        recetas.forEach(function(receta) {
+            var titulo = receta.querySelector('h3').textContent.toLowerCase();
+            if (titulo.includes(busqueda)) {
+                receta.style.display = 'block';  // Mostrar receta si coincide con la búsqueda
+            } else {
+                receta.style.display = 'none';  // Ocultar receta si no coincide
+            }
+        });
+    });
+    </script>
+    
+    
+    
+</body>
+</html>

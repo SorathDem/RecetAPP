@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Recetas</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+        }
+
+        h2 {
+            font-size: 2em;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 12px 24px;
+            margin: 10px 5px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+            white-space: nowrap;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-decoration: none;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .button-primary {
+            background-color: #2ecc71;
+            color: white;
+        }
+
+        .button-primary:hover {
+            background-color: #27ae60;
+        }
+
+        .button-secondary {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .button-secondary:hover {
+            background-color: #2980b9;
+        }
+
+        .button-danger {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .button-danger:hover {
+            background-color: #c0392b;
+        }
+
+        .receta-card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 30px auto;
+            width: 90%;
+            max-width: 800px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        .receta-card h3 {
+            color: #34495e;
+            font-size: 2.2em;
+            margin-top: 0;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #f39c12;
+            padding-bottom: 8px;
+        }
+
+        .receta-card img,
+        .receta-card video {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .receta-card p {
+            margin-bottom: 12px;
+            font-size: 1.1em;
+            color: #555;
+        }
+
+        .receta-card strong {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .receta-actions {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .receta-actions a {
+            padding: 12px 24px;
+            margin: 5px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .receta-actions .editar {
+            background-color: #f39c12;
+            color: white;
+        }
+
+        .receta-actions .editar:hover {
+            background-color: #e67e22;
+        }
+
+        .receta-actions .eliminar {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .receta-actions .eliminar:hover {
+            background-color: #c0392b;
+        }
+
+        .top-buttons {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            h2 {
+                font-size: 1.6em;
+            }
+
+            .button, .receta-actions a {
+                padding: 10px 20px;
+                font-size: 0.9em;
+                margin: 5px;
+            }
+
+            .receta-card {
+                width: 95%;
+                padding: 20px;
+                margin: 20px auto;
+            }
+
+            .receta-card h3 {
+                font-size: 1.8em;
+            }
+
+            .receta-card p {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>MI PERFIL</h1>
+    <h2>Mis Recetas</h2>
+
+    <div class="top-buttons">
+        <a href="{% url 'crear_receta' %}" class="button button-primary">➕ Crear nueva receta</a>
+        <a href="{% url 'pagprincipal' %}" class="button button-danger">← Volver</a>
+    </div>
+
+    {% for receta in recetas %}
+        <div class="receta-card">
+            <h3>{{ receta.titulo }}</h3>
+            {% if receta.imagen %}
+                <img src="{{ receta.imagen.url }}" alt="Imagen de {{ receta.titulo }}">
+            {% endif %}
+            <p><strong>Ingredientes:</strong> {{ receta.ingredientes }}</p>
+            <p><strong>Paso a paso:</strong> {{ receta.pasos }}</p>
+            {% if receta.video %}
+                <video controls>
+                    <source src="{{ receta.video.url }}">
+                    Tu navegador no soporta video.
+                </video>
+            {% endif %}
+
+            <div class="receta-actions">
+                <a href="{% url 'editar_receta' receta.id %}" class="editar">✏️ Editar</a>
+                <a href="{% url 'eliminar_receta' receta.id %}" class="eliminar">🗑️ Eliminar</a>
+            </div>
+        </div>
+    {% empty %}
+        <p style="text-align: center;">No tienes recetas aún.</p>
+    {% endfor %}
+</body>
+</html>
