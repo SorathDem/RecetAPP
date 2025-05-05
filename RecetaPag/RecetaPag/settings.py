@@ -66,7 +66,7 @@ MIDDLEWARE = [
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-ROOT_URLCONF = 'RecetaPag.RecetaPag.urls'
+ROOT_URLCONF = 'RecetaPag.urls'
 
 TEMPLATES = [
     {
