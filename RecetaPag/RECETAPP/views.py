@@ -42,7 +42,7 @@ def login_page(request):
 
 @login_required
 def pagprincipal(request):
-    return render(request, "pagPrincipal.html")
+    return render(request, "pagprincipal.html")
 
 def login_view(request):
     if request.method == "POST":
@@ -76,7 +76,7 @@ def redirigir_usuario(request):
     elif request.user.is_staff:
         return redirect('psicologo')  # Redirige a la página de psicólogos
     else:
-        return redirect('pagPrincipal.html') 
+        return redirect('pagprincipal.html') 
 
 @login_required
 def mis_recetas(request):
