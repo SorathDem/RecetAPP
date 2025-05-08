@@ -36,7 +36,7 @@ if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)  
 
 STATICFILES_DIRS = [
-    BASE_DIR / "static",
+    BASE_DIR / "media",
 ]
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = 'pagprincipal'
